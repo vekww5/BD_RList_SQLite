@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.bd_rlist_sqlite.room.Dia;
@@ -17,6 +18,8 @@ import com.example.bd_rlist_sqlite.room.DiaListAdapter;
 import com.example.bd_rlist_sqlite.room.DiaViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +48,19 @@ public class MainActivity extends AppCompatActivity {
             adapter.submitList(dias);
         });
 
+
+        final Button button = findViewById(R.id.btn_send_data);
+        button.setOnClickListener(view ->  {
+
+            // Получить текущее время в миллисекундах
+            long end = System.currentTimeMillis();
+            // Получить время 30 минут назад в миллисекундах
+            long start = end - 1800000;
+
+            List<Dia> list_dia = mDiaViewModel.getDiaForPeriod(start, end).getValue();
+            System.out.println(list_dia);
+
+        });
 
 
 
@@ -100,9 +116,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
 
-            String str = data.getStringExtra(NewWordActivity.EXTRA_REPLY);
-            Dia dia = new Dia(0,  0, Float.parseFloat(str),0,0);
+            float il = Float.parseFloat(data.getStringExtra(NewWordActivity.EXTRA_ILONG));
+            float is = Float.parseFloat(data.getStringExtra(NewWordActivity.EXTRA_ISHORT));
+            float gl = Float.parseFloat(data.getStringExtra(NewWordActivity.EXTRA_GLUCOSE));
+            float xe = Float.parseFloat(data.getStringExtra(NewWordActivity.EXTRA_XE));
 
+            Dia dia = new Dia(il, is, gl, xe, System.currentTimeMillis());
             mDiaViewModel.insert(dia);
 
         } else {

@@ -17,8 +17,8 @@ public class DiaViewHolder extends RecyclerView.ViewHolder {
         wordItemView = itemView.findViewById(R.id.textView);
     }
 
-    public void bind(String gl, String ij) {
-        wordItemView.setText(gl + " "+ ij);
+    public void bind(String il, String is, String gl, String xe) {
+        wordItemView.setText("il:" + il + "      is:" + is+"      gl:" + gl+"      xe:" + xe);
     }
 
     static DiaViewHolder create(ViewGroup parent) {

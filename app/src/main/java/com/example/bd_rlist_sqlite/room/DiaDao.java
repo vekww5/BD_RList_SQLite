@@ -21,6 +21,10 @@ public interface DiaDao {
     //@Query("SELECT * FROM user WHERE first_name LIKE :first AND " + "last_name LIKE :last LIMIT 1")
     //User findByName(String first, String last);
 
+    //TODO: Add a method to get all the dias for a given period.
+    @Query("SELECT * FROM table_dia WHERE date_time BETWEEN :start AND :end")
+    LiveData<List<Dia>> getDiaForPeriod(long start, long end);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Dia... dias);
 

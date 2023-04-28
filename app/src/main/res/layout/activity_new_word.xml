@@ -5,12 +5,45 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/edit_word"
+        android:id="@+id/edit_injectLong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/min_height"
         android:fontFamily="sans-serif-light"
-        android:hint="@string/hint_word"
+        android:hint="injectLong"
+        android:inputType="textAutoComplete"
+        android:layout_margin="@dimen/big_padding"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/edit_injectShort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/min_height"
+        android:fontFamily="sans-serif-light"
+        android:hint="injectShort"
+        android:inputType="textAutoComplete"
+        android:layout_margin="@dimen/big_padding"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/edit_glucose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/min_height"
+        android:fontFamily="sans-serif-light"
+        android:hint="glucose"
+        android:inputType="textAutoComplete"
+        android:layout_margin="@dimen/big_padding"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/edit_xe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/min_height"
+        android:fontFamily="sans-serif-light"
+        android:hint="xe"
         android:inputType="textAutoComplete"
         android:layout_margin="@dimen/big_padding"
         android:textSize="18sp" />

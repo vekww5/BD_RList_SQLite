@@ -22,6 +22,11 @@ public class DiaRepository {
         return mAllDias;
     }
 
+    //TODO: getDiaForPeriod in LiveData not Async
+    LiveData<List<Dia>> getDiaForPeriod(long start, long end) {
+        return mDiaDao.getDiaForPeriod(start, end);
+    }
+
     void insert(Dia dia) {
         DiaRoomDatabase.databaseWriteExecutor.execute(() -> {
             mDiaDao.insert(dia);

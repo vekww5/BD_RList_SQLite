@@ -22,6 +22,8 @@ public class DiaViewModel extends AndroidViewModel {
 
     public LiveData<List<Dia>> getAllDias() { return mAllDias; }
 
+    public LiveData<List<Dia>> getDiaForPeriod(long start, long end) { return mRepository.getDiaForPeriod(start, end); }
+
     public void insert(Dia dia) { mRepository.insert(dia); }
 
     public void delete(int id) { mRepository.delete(id); }

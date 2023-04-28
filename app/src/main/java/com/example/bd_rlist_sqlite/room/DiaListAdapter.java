@@ -21,7 +21,7 @@ public class DiaListAdapter extends ListAdapter<Dia, DiaViewHolder>{
     public void onBindViewHolder(DiaViewHolder holder, int position) {
         Dia current = getItem(position);
 
-        holder.bind(current.getGlucoseString(), current.getXeString());
+        holder.bind(current.getInjectLongString(), current.getInjectShortString(), current.getGlucoseString(), current.getXeString());
     }
 
     //TODO: getDiaAtPosition

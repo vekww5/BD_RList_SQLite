@@ -43,6 +43,7 @@ public class Dia {
     public void setInjectLong(float injectLong) {
         this.injectLong = injectLong;
     }
+    public String getInjectLongString() {return String.valueOf(injectLong);}
 
     public float getInjectShort() {
         return injectShort;
@@ -51,6 +52,8 @@ public class Dia {
     public void setInjectShort(float injectShort) {
         this.injectShort = injectShort;
     }
+
+    public String getInjectShortString() {return String.valueOf(injectShort);}
 
     public float getGlucose() {return glucose;}
 
