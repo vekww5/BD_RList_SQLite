@@ -16,10 +16,16 @@ import android.widget.Toast;
 import com.example.bd_rlist_sqlite.room.Dia;
 import com.example.bd_rlist_sqlite.room.DiaListAdapter;
 import com.example.bd_rlist_sqlite.room.DiaViewModel;
+import com.example.bd_rlist_sqlite.sokets.TCPConnect;
+import com.example.bd_rlist_sqlite.sokets.TCPConnection;
+import com.example.bd_rlist_sqlite.sokets.TCPConnectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,8 +63,24 @@ public class MainActivity extends AppCompatActivity {
             // Получить время 30 минут назад в миллисекундах
             long start = end - 1800000;
 
-            List<Dia> list_dia = mDiaViewModel.getDiaForPeriod(start, end).getValue();
-            System.out.println(list_dia);
+            //TODO: Подумать как поправить с observe, чтобы вызывался 1 раз
+            mDiaViewModel.getDiaForPeriod(start, end).observe (this, dias -> {
+                List<Dia> list_dia  = dias;
+                String jsonArray = new Gson().toJson(list_dia);
+
+                TCPConnectionListener tcpConnectionListener = new TCPConnect();
+                try {
+                    TCPConnection tcpConnection = new TCPConnection(tcpConnectionListener,"192.168.1.39", 5000);
+                    tcpConnection.sendString(jsonArray);
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            });
+
+
+
 
         });
 
