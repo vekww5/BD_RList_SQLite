@@ -1,5 +1,7 @@
 package com.example.bd_rlist_sqlite.sokets;
 
+import android.os.AsyncTask;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -7,7 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-public class TCPConnection {
+public class TCPConnection  {
     private Socket socket;
     private Thread thread;
     private BufferedReader reader;
@@ -93,4 +95,5 @@ public class TCPConnection {
     public String toString() {
         return "TCPConnection: " + socket.getInetAddress() + ": " + socket.getPort();
     }
+
 }

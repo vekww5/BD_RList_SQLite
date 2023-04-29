@@ -11,11 +11,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bd_rlist_sqlite.room.Dia;
 import com.example.bd_rlist_sqlite.room.DiaListAdapter;
 import com.example.bd_rlist_sqlite.room.DiaViewModel;
+import com.example.bd_rlist_sqlite.sokets.MyTCPClient;
 import com.example.bd_rlist_sqlite.sokets.TCPConnect;
 import com.example.bd_rlist_sqlite.sokets.TCPConnection;
 import com.example.bd_rlist_sqlite.sokets.TCPConnectionListener;
@@ -61,27 +63,51 @@ public class MainActivity extends AppCompatActivity {
             // Получить текущее время в миллисекундах
             long end = System.currentTimeMillis();
             // Получить время 30 минут назад в миллисекундах
-            long start = end - 1800000;
+            long start = end - 18000000; // -0
 
             //TODO: Подумать как поправить с observe, чтобы вызывался 1 раз
             mDiaViewModel.getDiaForPeriod(start, end).observe (this, dias -> {
                 List<Dia> list_dia  = dias;
+
                 String jsonArray = new Gson().toJson(list_dia);
+                Thread thread = new Thread(() -> {
+                    TCPConnectionListener tcpConnectionListener = new TCPConnectionListener() {
+                        @Override
+                        public void onConnectionReady(TCPConnection tcpConnection) {
+                            // Обработка успешного установления соединения
+                        }
 
-                TCPConnectionListener tcpConnectionListener = new TCPConnect();
-                try {
-                    TCPConnection tcpConnection = new TCPConnection(tcpConnectionListener,"192.168.1.39", 5000);
-                    tcpConnection.sendString(jsonArray);
+                        @Override
+                        public void onDisconnect(TCPConnection TCPConnection) {
+                            // Обработка разрыва соединения
+                        }
 
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                        @Override
+                        public void onMessageReceived(TCPConnection tcpConnect, String str) {
+                            // Обработка получения нового сообщения
+
+                            Toast.makeText(MainActivity.this, "str", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onException(TCPConnection tcpConnection, Exception ex) {
+                            // Обработка ошибки
+                        }
+                    };
+
+                    TCPConnection tcpConnection = null;
+                    try {
+                        tcpConnection = new TCPConnection(tcpConnectionListener,"192.168.1.39", 5000);
+                        tcpConnection.sendString(jsonArray);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                thread.start();
 
             });
-
-
-
-
         });
 
 
@@ -153,5 +179,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     }
+
 
 }
