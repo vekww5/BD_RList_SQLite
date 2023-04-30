@@ -34,11 +34,16 @@ public class MainActivity extends AppCompatActivity {
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
     private DiaViewModel mDiaViewModel;
 
+    String word = "";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        TextView mTextView = findViewById(R.id.textView21);
 
         //TODO: EDIT THIS WordListAdapter
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
@@ -86,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
                         public void onMessageReceived(TCPConnection tcpConnect, String str) {
                             // Обработка получения нового сообщения
 
-                            Toast.makeText(MainActivity.this, "str", Toast.LENGTH_SHORT).show();
+                            word = str;
 
+                            mTextView.setText("123");
                         }
 
                         @Override
@@ -110,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             });
         });
 
-
+        mTextView.setText(word);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
